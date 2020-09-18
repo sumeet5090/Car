@@ -18,13 +18,17 @@ class Auth extends CI_Controller
 
 	public function login(){
 
+		if(is_logged_in(true)){
+			redirect('admin/dashboard');
+		}
+
 		//1. set the validations
 		//2. if valid inputs, then collect the inputs, check the credentials from db
 		//3. if valid user, start the session
 		//4. redirect to dashboard
 
-		// set the validations
-		$this->form_validation->set_rules('email', 'Email', 'trim|required|min_length[3]|max_length[20]|valid_email');
+		//1. set the validations
+		$this->form_validation->set_rules('email', 'Email', 'trim|required|min_length[3]|max_length[40]|valid_email');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[3]|max_length[12]');
 
 		if ($this->form_validation->run()  == false){
@@ -40,7 +44,7 @@ class Auth extends CI_Controller
 				$is_valid = check_login_credentials($input, true);
 
 				//3. if valid user, start the session
-				if( $is_valid ){
+				if( $is_valid  == true ){
 
 					//preparing session details
 						$condition = array('email'=> $input['email']);
@@ -56,6 +60,7 @@ class Auth extends CI_Controller
 
 				//4. if invalid user, redirect to login
 				else {
+					$this->session->set_flashdata('falsh', $is_valid);
 					redirect('admin/auth/login');
 				}
 			}
@@ -109,6 +114,4 @@ class Auth extends CI_Controller
 		clear_session(true);
 		redirect('admin/auth/login');
 	}
-
-
 }
