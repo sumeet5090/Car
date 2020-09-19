@@ -22,7 +22,7 @@
 	<?= form_password('password_c', '')?>
 <!--	--><?//= form_error('password_c')?>
 
-	<?= form_submit('register', 'Register')?>
+	<?= form_submit('register', 'Register', 'class="btn btn-primary"')?>
 
 	<?= form_close()?>
 
