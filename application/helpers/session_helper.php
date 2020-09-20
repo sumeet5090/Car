@@ -20,7 +20,7 @@ function start_session($session_details, $is_admin = false){
 
 				$CI->session->set_userdata( $session_key, $session_value );
 
-				if( isset( $_SESSION[$session_key] ) && !empty( $_SESSION[$session_key]) ){
+				if( isset( $_SESSION[$session_key] ) && !empty( $_SESSION[$session_key] ) ){
 					continue;
 				}
 				else
@@ -33,9 +33,11 @@ function start_session($session_details, $is_admin = false){
 
 				$CI->session->set_userdata( $session_key, $session_value );
 
-				if( ! isset( $_SESSION[$session_key] ) ){
-					return false;
+				if( isset( $_SESSION[$session_key] ) && !empty( $_SESSION[$session_key] ) ){
+					continue;
 				}
+				else
+					return false;
 			}
 		}
 		return true;
