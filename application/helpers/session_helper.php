@@ -85,7 +85,18 @@ function clear_session($is_admin = false){
 
 		$CI->session->unset_userdata('is_logged_in');
 
-		return (isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] == true) ? false : true;
+		return (isset( $_SESSION['is_logged_in'] ) || ($_SESSION['is_logged_in'] == 1)) ? false : true;
 
+	}
+}
+
+function get_customer_email(){
+
+	if( ! is_user_logged_in() ){
+		return false;
+	}
+	else{
+		$CI =& get_instance();
+		return ( ! empty($_SESSION['email']) ) ? $CI->session->userdata('email') : false;
 	}
 }

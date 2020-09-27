@@ -27,14 +27,13 @@ class Auth extends CI_Controller
 
 		if(is_user_logged_in()){
 
-			redirect('insurance/home');
+			isset($_SESSION['current_uri']) ? redirect($this->session->userdata('current_uri')):redirect('insurance/home');
 		}
 
 		$this->sumeet->validations_for_login();
 
 		if ($this->form_validation->run()  == false){
-
-			view('client/auth/login');
+			$this->load->view('client/auth/login');
 		}
 		else{
 
@@ -60,7 +59,7 @@ class Auth extends CI_Controller
 
 						start_session( $session_details, false );
 
-						redirect('insurance/home');
+						isset($_SESSION['current_uri']) ? redirect($this->session->userdata('current_uri')):redirect('insurance/home');
 					}
 					elseif( $suc === false ){
 
@@ -91,7 +90,7 @@ class Auth extends CI_Controller
 
 		if ($this->form_validation->run()  == false){
 
-			view('client/auth/register');
+			$this->load->view('client/auth/register');
 
 		}
 		else{
@@ -110,7 +109,14 @@ class Auth extends CI_Controller
 	public function logout(){
 
 		clear_session(false);
-		redirect('auth/login');
-
+		isset($_SESSION['current_uri']) ? redirect($this->session->userdata('current_uri')):redirect('auth/login');
 	}
+
+//	public function password( $var ){
+//
+//		switch ($var){
+//			case 'forgot' :
+//
+//		}
+//	}
 }

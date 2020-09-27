@@ -32,4 +32,13 @@ class Customers_model extends CI_Model{
 		}
 		return false;
 	}
+
+	public function update_customer( $condition, $input ){
+		$this->db->where($condition)->update($this->table, $input);
+
+		if($this->db->affected_rows() == 1){
+			return true;
+		}
+		else return false;
+	}
 }
